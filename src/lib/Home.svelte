@@ -59,9 +59,9 @@
 	}
 
 	button:hover {
-		margin: 18px 8px;
-		padding: 4px;
+		margin: 18px 9px;
+		padding: 3px;
 		border-radius: 12px;
-		width: calc(100% - 8px * 2);
+		width: calc(100% - 9px * 2);
 	}
 </style>
