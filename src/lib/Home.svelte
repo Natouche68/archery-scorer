@@ -1,9 +1,28 @@
 <script lang="ts">
+	import { scoreSheet, type scoreType } from './ScoreSheet';
+
 	let scoreSheetName: string;
 	let volleyNumber: number;
 	let arrowNumber: number;
 
-	function createNewScoreSheet() {}
+	function createNewScoreSheet() {
+		const newScoreSheet: scoreType[][] = [];
+
+		for (let index = 0; index < volleyNumber; index++) {
+			const newVolley: scoreType[] = [];
+
+			for (let index2 = 0; index2 < arrowNumber; index2++) {
+				newVolley.push('');
+			}
+
+			newScoreSheet.push(newVolley);
+		}
+
+		scoreSheet.set({
+			name: scoreSheetName,
+			scoreSheet: newScoreSheet,
+		});
+	}
 </script>
 
 <form class="home" on:submit|preventDefault={createNewScoreSheet}>
