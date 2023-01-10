@@ -12,7 +12,7 @@
 			const newVolley: scoreType[] = [];
 
 			for (let index2 = 0; index2 < arrowNumber; index2++) {
-				newVolley.push('');
+				newVolley.push('-');
 			}
 
 			newScoreSheet.push(newVolley);
