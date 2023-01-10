@@ -1,7 +1,12 @@
 <script lang="ts">
+	import { scoreSheet } from './lib/ScoreSheet';
 	import Navbar from './lib/Navbar.svelte';
 	import Home from './lib/Home.svelte';
 </script>
 
 <Navbar />
-<Home />
+{#if $scoreSheet}
+	{$scoreSheet.name}
+{:else}
+	<Home />
+{/if}
