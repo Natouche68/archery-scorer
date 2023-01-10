@@ -1,10 +1,19 @@
 <script lang="ts">
+	let scoreSheetName: string;
 	let volleyNumber: number;
 	let arrowNumber: number;
+
+	function createNewScoreSheet() {}
 </script>
 
-<form class="home">
+<form class="home" on:submit|preventDefault={createNewScoreSheet}>
 	<div class="title">Créer une nouvelle feuille de score</div>
+	<input
+		type="text"
+		bind:value={scoreSheetName}
+		placeholder="Nom de la feuille de score"
+		required
+	/>
 	<input type="number" bind:value={volleyNumber} placeholder="Nombre de volées" required />
 	<input type="number" bind:value={arrowNumber} placeholder="Nombre de flèches" required />
 	<button type="submit">Créer</button>
