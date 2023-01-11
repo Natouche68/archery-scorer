@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { scoreSheet } from './ScoreSheet';
+	import Numpad from './Numpad.svelte';
+
+	let isNumpadActive: boolean = false;
 
 	function calcTotalVolley(index: number): number {
 		let total: number = 0;
@@ -22,6 +25,8 @@
 	}
 </script>
 
+<Numpad bind:isNumpadActive />
+
 <div class="score-sheet-editor">
 	<div class="title">
 		{$scoreSheet.name}
@@ -42,6 +47,10 @@
 		</div>
 	{/each}
 </div>
+
+{#if isNumpadActive}
+	<div style="height: 288px;" />
+{/if}
 
 <style>
 	.score-sheet-editor {
