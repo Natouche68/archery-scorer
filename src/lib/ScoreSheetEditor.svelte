@@ -3,6 +3,7 @@
 	import Numpad from './Numpad.svelte';
 
 	let isNumpadActive: boolean = false;
+	let editingVolley: number | '' = '';
 
 	function calcTotalVolley(index: number): number {
 		let total: number = 0;
@@ -23,6 +24,11 @@
 			return calcTotalVolley(index) + calcCumulTotal(index - 1);
 		}
 	}
+
+	function updateVolley(index: number): void {
+		isNumpadActive = true;
+		editingVolley = index;
+	}
 </script>
 
 <Numpad bind:isNumpadActive />
@@ -32,7 +38,13 @@
 		{$scoreSheet.name}
 	</div>
 	{#each $scoreSheet.scoreSheet as volley, index}
-		<div class="volley">
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<div
+			class="volley {editingVolley != '' && editingVolley == index ? ' editing' : ''}"
+			on:click={() => {
+				updateVolley(index);
+			}}
+		>
 			{#each volley as score}
 				<div class="score">
 					{score + ' '}
@@ -73,6 +85,10 @@
 
 	.volley:last-child {
 		border: none;
+	}
+
+	.volley.editing {
+		color: var(--primary-color);
 	}
 
 	.score {
