@@ -4,6 +4,7 @@
 
 	let isNumpadActive: boolean = false;
 	let editingVolley: number | '' = '';
+	let editingArrow: number = 0;
 
 	function calcTotalVolley(index: number): number {
 		let total: number = 0;
@@ -31,7 +32,7 @@
 	}
 </script>
 
-<Numpad bind:isNumpadActive bind:editingVolley />
+<Numpad bind:isNumpadActive bind:editingVolley bind:editingArrow />
 
 {#key $scoreSheet}
 	<div class="score-sheet-editor">
@@ -39,15 +40,18 @@
 			{$scoreSheet.name}
 		</div>
 		{#each $scoreSheet.scoreSheet as volley, index}
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div
-				class="volley {editingVolley != '' && editingVolley == index ? ' editing' : ''}"
+			<button
+				class="volley {editingVolley === index ? ' editing' : ''}"
 				on:click={() => {
 					updateVolley(index);
 				}}
 			>
-				{#each volley as score}
-					<div class="score">
+				{#each volley as score, currentArrow}
+					<div
+						class="score {editingVolley === index && editingArrow === currentArrow
+							? ' editing'
+							: ''}"
+					>
 						{score + ' '}
 					</div>
 				{/each}
@@ -57,7 +61,7 @@
 				<div class="total">
 					{calcCumulTotal(index)}
 				</div>
-			</div>
+			</button>
 		{/each}
 	</div>
 {/key}
@@ -78,11 +82,16 @@
 	}
 
 	.volley {
+		width: 100%;
 		padding: 6px;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+		border: none;
 		border-bottom: 1px solid var(--neutral-color);
+		background: #fff;
+		font-family: Poppins, Calibri, sans-serif;
+		transition: all 0.4s ease;
 	}
 
 	.volley:last-child {
@@ -90,13 +99,19 @@
 	}
 
 	.volley.editing {
-		color: var(--primary-color);
+		background: var(--light-gray);
 	}
 
 	.score {
 		width: 60px;
 		text-align: center;
 		font-size: 20px;
+		transition: all 0.4s ease;
+	}
+
+	.score.editing {
+		color: var(--primary-color);
+		transform: scale(1.2);
 	}
 
 	.total {
