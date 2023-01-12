@@ -20,6 +20,8 @@
 			editingArrow++;
 
 			if (editingArrow == $scoreSheet.arrowNumber) {
+				$scoreSheet.scoreSheet[editingVolley].sort((a: number, b: number) => b - a);
+
 				cancelNumpad();
 			}
 		}
