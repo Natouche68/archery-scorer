@@ -31,34 +31,36 @@
 	}
 </script>
 
-<Numpad bind:isNumpadActive />
+<Numpad bind:isNumpadActive bind:editingVolley />
 
-<div class="score-sheet-editor">
-	<div class="title">
-		{$scoreSheet.name}
-	</div>
-	{#each $scoreSheet.scoreSheet as volley, index}
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<div
-			class="volley {editingVolley != '' && editingVolley == index ? ' editing' : ''}"
-			on:click={() => {
-				updateVolley(index);
-			}}
-		>
-			{#each volley as score}
-				<div class="score">
-					{score + ' '}
-				</div>
-			{/each}
-			<div class="total">
-				{calcTotalVolley(index)}
-			</div>
-			<div class="total">
-				{calcCumulTotal(index)}
-			</div>
+{#key $scoreSheet}
+	<div class="score-sheet-editor">
+		<div class="title">
+			{$scoreSheet.name}
 		</div>
-	{/each}
-</div>
+		{#each $scoreSheet.scoreSheet as volley, index}
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<div
+				class="volley {editingVolley != '' && editingVolley == index ? ' editing' : ''}"
+				on:click={() => {
+					updateVolley(index);
+				}}
+			>
+				{#each volley as score}
+					<div class="score">
+						{score + ' '}
+					</div>
+				{/each}
+				<div class="total">
+					{calcTotalVolley(index)}
+				</div>
+				<div class="total">
+					{calcCumulTotal(index)}
+				</div>
+			</div>
+		{/each}
+	</div>
+{/key}
 
 {#if isNumpadActive}
 	<div style="height: 288px;" />

@@ -21,6 +21,7 @@
 		scoreSheet.set({
 			name: scoreSheetName,
 			scoreSheet: newScoreSheet,
+			arrowNumber: arrowNumber,
 		});
 	}
 </script>
