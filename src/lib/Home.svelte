@@ -63,7 +63,12 @@
 	<div class="my-sheets">
 		<div class="title">Mes feuilles de score</div>
 		{#each sheets as sheet}
-			<button class="sheet">
+			<button
+				class="sheet"
+				on:click={() => {
+					scoreSheet.set(sheet);
+				}}
+			>
 				<div>
 					{sheet.name}
 				</div>
