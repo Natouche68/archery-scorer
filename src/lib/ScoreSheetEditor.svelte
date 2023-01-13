@@ -35,6 +35,7 @@
 <Numpad bind:isNumpadActive bind:editingVolley bind:editingArrow />
 
 <div class="score-sheet-editor">
+	<button class="back-button" on:click={() => scoreSheet.set(null)}>← Retour</button>
 	<div class="title">
 		{$scoreSheet.name}
 	</div>
@@ -73,6 +74,18 @@
 <style>
 	.score-sheet-editor {
 		padding: 24px 5%;
+	}
+
+	.back-button {
+		margin-bottom: 16px;
+		width: 100%;
+		color: var(--neutral-color);
+		font-family: Poppins, Calibri, sans-serif;
+		font-size: 18px;
+		text-align: left;
+		border: none;
+		outline: none;
+		background: none;
 	}
 
 	.title {
