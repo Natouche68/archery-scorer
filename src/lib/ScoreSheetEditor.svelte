@@ -34,37 +34,37 @@
 
 <Numpad bind:isNumpadActive bind:editingVolley bind:editingArrow />
 
-{#key $scoreSheet}
-	<div class="score-sheet-editor">
-		<div class="title">
-			{$scoreSheet.name}
-		</div>
-		{#each $scoreSheet.scoreSheet as volley, index}
-			<button
-				class="volley {editingVolley === index ? ' editing' : ''}"
-				on:click={() => {
-					updateVolley(index);
-				}}
-			>
-				{#each volley as score, currentArrow}
-					<div
-						class="score {editingVolley === index && editingArrow === currentArrow
-							? ' editing'
-							: ''}"
-					>
-						{score + ' '}
-					</div>
-				{/each}
-				<div class="total">
-					{calcTotalVolley(index)}
-				</div>
-				<div class="total">
-					{calcCumulTotal(index)}
-				</div>
-			</button>
-		{/each}
+<div class="score-sheet-editor">
+	<div class="title">
+		{$scoreSheet.name}
 	</div>
-{/key}
+	{#each $scoreSheet.scoreSheet as volley, index}
+		<button
+			class="volley {editingVolley === index ? ' editing' : ''}"
+			on:click={() => {
+				updateVolley(index);
+			}}
+		>
+			{#each volley as score, currentArrow}
+				<div
+					class="score {editingVolley === index && editingArrow === currentArrow ? ' editing' : ''}"
+				>
+					{score + ' '}
+				</div>
+			{/each}
+			<div class="total">
+				{#key $scoreSheet}
+					{calcTotalVolley(index)}
+				{/key}
+			</div>
+			<div class="total">
+				{#key $scoreSheet}
+					{calcCumulTotal(index)}
+				{/key}
+			</div>
+		</button>
+	{/each}
+</div>
 
 {#if isNumpadActive}
 	<div style="height: 288px;" />
