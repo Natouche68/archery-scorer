@@ -13,7 +13,13 @@ export function saveSheet(): void {
 }
 
 export function loadSheets(): scoreSheetType[] {
-	return [];
+	const sheets: scoreSheetType[] = [];
+
+	for (let index = 0; index < window.localStorage.length; index++) {
+		sheets.push(JSON.parse(window.localStorage.getItem(window.localStorage.key(index))));
+	}
+
+	return sheets;
 }
 
 export function deleteSheet(sheetId: string): void {}

@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { scoreSheet, type scoreType } from './ScoreSheet';
+	import { scoreSheet, type scoreSheetType, type scoreType } from './ScoreSheet';
+	import { loadSheets } from './SaveUtils';
 
 	let scoreSheetName: string;
 	let volleyNumber: number;
 	let arrowNumber: number;
+	let sheets = loadSheets();
 
 	function createNewScoreSheet() {
 		const newScoreSheet: scoreType[][] = [];
@@ -24,20 +26,54 @@
 			arrowNumber: arrowNumber,
 		});
 	}
+
+	function calcSheetTotal(sheet: scoreSheetType): number {
+		let total: number = 0;
+
+		sheet.scoreSheet.forEach((volley) => {
+			let volleyTotal: number = 0;
+
+			volley.forEach((value) => {
+				if (value != '-' && value != 'M') {
+					volleyTotal += value;
+				}
+			});
+
+			total += volleyTotal;
+		});
+
+		return total;
+	}
 </script>
 
-<form class="home" on:submit|preventDefault={createNewScoreSheet}>
-	<div class="title">Créer une nouvelle feuille de score</div>
-	<input
-		type="text"
-		bind:value={scoreSheetName}
-		placeholder="Nom de la feuille de score"
-		required
-	/>
-	<input type="number" bind:value={volleyNumber} placeholder="Nombre de volées" required />
-	<input type="number" bind:value={arrowNumber} placeholder="Nombre de flèches" required />
-	<button type="submit">Créer</button>
-</form>
+<div class="home">
+	<form on:submit|preventDefault={createNewScoreSheet}>
+		<div class="title">Créer une nouvelle feuille de score</div>
+		<input
+			type="text"
+			bind:value={scoreSheetName}
+			placeholder="Nom de la feuille de score"
+			required
+		/>
+		<input type="number" bind:value={volleyNumber} placeholder="Nombre de volées" required />
+		<input type="number" bind:value={arrowNumber} placeholder="Nombre de flèches" required />
+		<button type="submit" class="submit-button">Créer</button>
+	</form>
+
+	<div class="my-sheets">
+		<div class="title">Mes feuilles de score</div>
+		{#each sheets as sheet}
+			<button class="sheet">
+				<div>
+					{sheet.name}
+				</div>
+				<div style="font-weight: 500;">
+					{calcSheetTotal(sheet)}
+				</div>
+			</button>
+		{/each}
+	</div>
+</div>
 
 <style>
 	.home {
@@ -72,7 +108,7 @@
 		margin: 7px 0;
 	}
 
-	button {
+	.submit-button {
 		margin: 16px 6px;
 		padding: 6px;
 		width: calc(100% - 6px * 2);
@@ -87,10 +123,33 @@
 		cursor: pointer;
 	}
 
-	button:hover {
-		margin: 18px 9px;
-		padding: 3px;
-		border-radius: 12px;
-		width: calc(100% - 9px * 2);
+	.submit-button:hover {
+		transform: scale(0.96);
+	}
+
+	.my-sheets {
+		padding: 36px 0 0 0;
+	}
+
+	.sheet {
+		width: 100%;
+		padding: 6px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		border: none;
+		border-bottom: 1px solid var(--neutral-color);
+		background: #fff;
+		font-family: Poppins, Calibri, sans-serif;
+		font-size: 18px;
+		transition: all 0.4s ease;
+	}
+
+	.sheet:last-child {
+		border-bottom: none;
+	}
+
+	.sheet:hover {
+		background: var(--light-gray);
 	}
 </style>
