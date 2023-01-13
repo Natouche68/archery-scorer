@@ -5,6 +5,7 @@ export type scoreSheetType = {
 	name: string;
 	scoreSheet: scoreType[][];
 	arrowNumber: number;
+	saveKey?: string | undefined;
 };
 
 export const scoreSheet = writable<scoreSheetType>();

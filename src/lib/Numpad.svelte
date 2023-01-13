@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { scoreSheet } from './ScoreSheet';
+	import { saveSheet } from './SaveUtils';
 
 	export let isNumpadActive: boolean = false;
 	export let editingVolley: number | '' = '';
@@ -21,6 +22,7 @@
 
 			if (editingArrow == $scoreSheet.arrowNumber) {
 				$scoreSheet.scoreSheet[editingVolley].sort((a: number, b: number) => b - a);
+				saveSheet();
 
 				cancelNumpad();
 			}
