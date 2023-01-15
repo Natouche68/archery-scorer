@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { scoreSheet } from './ScoreSheet';
+	import { scoreSheet, type scoreType } from './ScoreSheet';
 	import Numpad from './Numpad.svelte';
 
 	let isNumpadActive: boolean = false;
@@ -27,8 +27,18 @@
 	}
 
 	function updateVolley(index: number): void {
-		isNumpadActive = true;
+		if (editingVolley !== '') {
+			$scoreSheet.scoreSheet[editingVolley].sort((a: scoreType, b: scoreType): number => {
+				if (typeof a == 'number' && typeof b == 'number') {
+					return b - a;
+				}
+				return 0;
+			});
+			scoreSheet.set($scoreSheet);
+		}
+		editingArrow = 0;
 		editingVolley = index;
+		isNumpadActive = true;
 	}
 </script>
 
