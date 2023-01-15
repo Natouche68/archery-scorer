@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { scoreSheet, type scoreType } from './ScoreSheet';
 	import Numpad from './Numpad.svelte';
+	import { saveSheet } from './SaveUtils';
 
 	let isNumpadActive: boolean = false;
 	let editingVolley: number | '' = '';
@@ -35,24 +36,44 @@
 				return 0;
 			});
 			scoreSheet.set($scoreSheet);
+			saveSheet();
 		}
 		editingArrow = 0;
 		editingVolley = index;
 		isNumpadActive = true;
 	}
+
+	function closeNumpad() {
+		$scoreSheet.scoreSheet[editingVolley].sort((a: scoreType, b: scoreType): number => {
+			if (typeof a == 'number' && typeof b == 'number') {
+				return b - a;
+			}
+			return 0;
+		});
+		scoreSheet.set($scoreSheet);
+		saveSheet();
+
+		isNumpadActive = false;
+		editingVolley = '';
+		editingArrow = 0;
+	}
 </script>
+
+<svelte:window on:click={closeNumpad} />
 
 <Numpad bind:isNumpadActive bind:editingVolley bind:editingArrow />
 
 <div class="score-sheet-editor">
-	<button class="back-button" on:click={() => scoreSheet.set(null)}>← Retour</button>
+	<button class="back-button" on:click|stopPropagation={() => scoreSheet.set(null)}>
+		← Retour
+	</button>
 	<div class="title">
 		{$scoreSheet.name}
 	</div>
 	{#each $scoreSheet.scoreSheet as volley, index}
 		<button
 			class="volley {editingVolley === index ? ' editing' : ''}"
-			on:click={() => {
+			on:click|stopPropagation={() => {
 				updateVolley(index);
 			}}
 		>

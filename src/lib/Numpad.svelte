@@ -43,7 +43,7 @@
 		<div class="row">
 			<button
 				class="key"
-				on:click={() => {
+				on:click|stopPropagation={() => {
 					keyClicked(1);
 				}}
 			>
@@ -51,7 +51,7 @@
 			</button>
 			<button
 				class="key"
-				on:click={() => {
+				on:click|stopPropagation={() => {
 					keyClicked(2);
 				}}
 			>
@@ -59,7 +59,7 @@
 			</button>
 			<button
 				class="key"
-				on:click={() => {
+				on:click|stopPropagation={() => {
 					keyClicked(3);
 				}}
 			>
@@ -69,7 +69,7 @@
 		<div class="row">
 			<button
 				class="key"
-				on:click={() => {
+				on:click|stopPropagation={() => {
 					keyClicked(4);
 				}}
 			>
@@ -77,7 +77,7 @@
 			</button>
 			<button
 				class="key"
-				on:click={() => {
+				on:click|stopPropagation={() => {
 					keyClicked(5);
 				}}
 			>
@@ -85,7 +85,7 @@
 			</button>
 			<button
 				class="key"
-				on:click={() => {
+				on:click|stopPropagation={() => {
 					keyClicked(6);
 				}}
 			>
@@ -95,7 +95,7 @@
 		<div class="row">
 			<button
 				class="key"
-				on:click={() => {
+				on:click|stopPropagation={() => {
 					keyClicked(7);
 				}}
 			>
@@ -103,7 +103,7 @@
 			</button>
 			<button
 				class="key"
-				on:click={() => {
+				on:click|stopPropagation={() => {
 					keyClicked(8);
 				}}
 			>
@@ -111,7 +111,7 @@
 			</button>
 			<button
 				class="key"
-				on:click={() => {
+				on:click|stopPropagation={() => {
 					keyClicked(9);
 				}}
 			>
@@ -121,7 +121,7 @@
 		<div class="row">
 			<button
 				class="key"
-				on:click={() => {
+				on:click|stopPropagation={() => {
 					keyClicked('M');
 				}}
 			>
@@ -129,7 +129,7 @@
 			</button>
 			<button
 				class="key"
-				on:click={() => {
+				on:click|stopPropagation={() => {
 					keyClicked(10);
 				}}
 			>
@@ -137,7 +137,7 @@
 			</button>
 			<button
 				class="key"
-				on:click={() => {
+				on:click|stopPropagation={() => {
 					keyClicked('←');
 				}}
 			>
