@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { scoreSheet } from './ScoreSheet';
 	import { saveSheet } from './SaveUtils';
+	import Back from './icons/Back.svelte';
 
 	export let isNumpadActive: boolean = false;
 	export let editingVolley: number | '' = '';
@@ -141,7 +142,7 @@
 					keyClicked('←');
 				}}
 			>
-				←
+				<Back fillColor="#ffffff" size={28} />
 			</button>
 		</div>
 	</div>

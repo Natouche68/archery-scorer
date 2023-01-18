@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { scoreSheet, type scoreType } from './ScoreSheet';
 	import Numpad from './Numpad.svelte';
+	import Back from './icons/Back.svelte';
+	import Delete from './icons/Delete.svelte';
+	import Edit from './icons/Edit.svelte';
 	import { saveSheet } from './SaveUtils';
 
 	let isNumpadActive: boolean = false;
@@ -44,14 +47,16 @@
 	}
 
 	function closeNumpad() {
-		$scoreSheet.scoreSheet[editingVolley].sort((a: scoreType, b: scoreType): number => {
-			if (typeof a == 'number' && typeof b == 'number') {
-				return b - a;
-			}
-			return 0;
-		});
-		scoreSheet.set($scoreSheet);
-		saveSheet();
+		if (editingVolley !== '') {
+			$scoreSheet.scoreSheet[editingVolley].sort((a: scoreType, b: scoreType): number => {
+				if (typeof a == 'number' && typeof b == 'number') {
+					return b - a;
+				}
+				return 0;
+			});
+			scoreSheet.set($scoreSheet);
+			saveSheet();
+		}
 
 		isNumpadActive = false;
 		editingVolley = '';
@@ -64,9 +69,17 @@
 <Numpad bind:isNumpadActive bind:editingVolley bind:editingArrow />
 
 <div class="score-sheet-editor">
-	<button class="back-button" on:click|stopPropagation={() => scoreSheet.set(null)}>
-		← Retour
-	</button>
+	<div class="options">
+		<button class="back-button" on:click={() => scoreSheet.set(null)}>
+			<Back fillColor="#9f9f9f" size={18} /> Retour
+		</button>
+		<button class="square-button">
+			<Edit fillColor="#9f9f9f" />
+		</button>
+		<button class="square-button">
+			<Delete fillColor="#9f9f9f" />
+		</button>
+	</div>
 	<div class="title">
 		{$scoreSheet.name}
 	</div>
@@ -107,6 +120,12 @@
 		padding: 24px 5%;
 	}
 
+	.options {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+
 	.back-button {
 		margin-bottom: 16px;
 		width: 100%;
@@ -114,6 +133,21 @@
 		font-family: Poppins, Calibri, sans-serif;
 		font-size: 18px;
 		text-align: left;
+		border: none;
+		outline: none;
+		background: none;
+	}
+
+	.square-button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 0 2px;
+		margin-bottom: 16px;
+		padding: 0;
+		text-align: center;
+		height: 30px;
+		width: 42px;
 		border: none;
 		outline: none;
 		background: none;
