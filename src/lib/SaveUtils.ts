@@ -22,4 +22,9 @@ export function loadSheets(): scoreSheetType[] {
 	return sheets;
 }
 
-export function deleteSheet(sheetId: string): void {}
+export function deleteSheet(): void {
+	if (get(scoreSheet).saveKey) {
+		window.localStorage.removeItem(get(scoreSheet).saveKey);
+	}
+	scoreSheet.set(null);
+}

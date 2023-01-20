@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { scoreSheet, type scoreType } from './ScoreSheet';
+	import { saveSheet } from './SaveUtils';
 	import Numpad from './Numpad.svelte';
+	import DeleteConfirmation from './DeleteConfirmation.svelte';
 	import Back from './icons/Back.svelte';
 	import Delete from './icons/Delete.svelte';
 	import Edit from './icons/Edit.svelte';
-	import { saveSheet } from './SaveUtils';
 
 	let isNumpadActive: boolean = false;
 	let editingVolley: number | '' = '';
 	let editingArrow: number = 0;
+	let isDeleteConfirmationActive: boolean = false;
 
 	function calcTotalVolley(index: number): number {
 		let total: number = 0;
@@ -44,6 +46,8 @@
 		editingArrow = 0;
 		editingVolley = index;
 		isNumpadActive = true;
+
+		isDeleteConfirmationActive = false;
 	}
 
 	function closeNumpad() {
@@ -67,49 +71,54 @@
 <svelte:window on:click={closeNumpad} />
 
 <Numpad bind:isNumpadActive bind:editingVolley bind:editingArrow />
+<DeleteConfirmation bind:isModalActive={isDeleteConfirmationActive} />
 
-<div class="score-sheet-editor">
-	<div class="options">
-		<button class="back-button" on:click={() => scoreSheet.set(null)}>
-			<Back fillColor="#9f9f9f" size={18} /> Retour
-		</button>
-		<button class="square-button">
-			<Edit fillColor="#9f9f9f" />
-		</button>
-		<button class="square-button">
-			<Delete fillColor="#9f9f9f" />
-		</button>
-	</div>
-	<div class="title">
-		{$scoreSheet.name}
-	</div>
-	{#each $scoreSheet.scoreSheet as volley, index}
-		<button
-			class="volley {editingVolley === index ? ' editing' : ''}"
-			on:click|stopPropagation={() => {
-				updateVolley(index);
-			}}
-		>
-			{#each volley as score, currentArrow}
-				<div
-					class="score {editingVolley === index && editingArrow === currentArrow ? ' editing' : ''}"
-				>
-					{score + ' '}
+{#if $scoreSheet}
+	<div class="score-sheet-editor">
+		<div class="options">
+			<button class="back-button" on:click={() => scoreSheet.set(null)}>
+				<Back fillColor="#9f9f9f" size={18} /> Retour
+			</button>
+			<button class="square-button">
+				<Edit fillColor="#9f9f9f" />
+			</button>
+			<button class="square-button" on:click={() => (isDeleteConfirmationActive = true)}>
+				<Delete fillColor="#9f9f9f" />
+			</button>
+		</div>
+		<div class="title">
+			{$scoreSheet.name}
+		</div>
+		{#each $scoreSheet.scoreSheet as volley, index}
+			<button
+				class="volley {editingVolley === index ? ' editing' : ''}"
+				on:click|stopPropagation={() => {
+					updateVolley(index);
+				}}
+			>
+				{#each volley as score, currentArrow}
+					<div
+						class="score {editingVolley === index && editingArrow === currentArrow
+							? ' editing'
+							: ''}"
+					>
+						{score + ' '}
+					</div>
+				{/each}
+				<div class="total">
+					{#key $scoreSheet}
+						{calcTotalVolley(index)}
+					{/key}
 				</div>
-			{/each}
-			<div class="total">
-				{#key $scoreSheet}
-					{calcTotalVolley(index)}
-				{/key}
-			</div>
-			<div class="total">
-				{#key $scoreSheet}
-					{calcCumulTotal(index)}
-				{/key}
-			</div>
-		</button>
-	{/each}
-</div>
+				<div class="total">
+					{#key $scoreSheet}
+						{calcCumulTotal(index)}
+					{/key}
+				</div>
+			</button>
+		{/each}
+	</div>
+{/if}
 
 {#if isNumpadActive}
 	<div style="height: 288px;" />
