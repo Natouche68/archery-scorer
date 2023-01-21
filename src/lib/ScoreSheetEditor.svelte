@@ -2,15 +2,18 @@
 	import { scoreSheet, type scoreType } from './ScoreSheet';
 	import { saveSheet } from './SaveUtils';
 	import Numpad from './Numpad.svelte';
+	import RenameSheetModal from './RenameSheetModal.svelte';
 	import DeleteConfirmation from './DeleteConfirmation.svelte';
 	import Back from './icons/Back.svelte';
 	import Delete from './icons/Delete.svelte';
 	import Edit from './icons/Edit.svelte';
+	import { bind } from 'svelte/internal';
 
 	let isNumpadActive: boolean = false;
 	let editingVolley: number | '' = '';
 	let editingArrow: number = 0;
 	let isDeleteConfirmationActive: boolean = false;
+	let isEditNameModalActive: boolean = false;
 
 	function calcTotalVolley(index: number): number {
 		let total: number = 0;
@@ -48,6 +51,7 @@
 		isNumpadActive = true;
 
 		isDeleteConfirmationActive = false;
+		isEditNameModalActive = false;
 	}
 
 	function closeNumpad() {
@@ -72,6 +76,7 @@
 
 <Numpad bind:isNumpadActive bind:editingVolley bind:editingArrow />
 <DeleteConfirmation bind:isModalActive={isDeleteConfirmationActive} />
+<RenameSheetModal bind:isModalActive={isEditNameModalActive} />
 
 {#if $scoreSheet}
 	<div class="score-sheet-editor">
@@ -79,7 +84,7 @@
 			<button class="back-button" on:click={() => scoreSheet.set(null)}>
 				<Back fillColor="#9f9f9f" size={18} /> Retour
 			</button>
-			<button class="square-button">
+			<button class="square-button" on:click={() => (isEditNameModalActive = true)}>
 				<Edit fillColor="#9f9f9f" />
 			</button>
 			<button class="square-button" on:click={() => (isDeleteConfirmationActive = true)}>
