@@ -7,7 +7,6 @@
 	import Back from './icons/Back.svelte';
 	import Delete from './icons/Delete.svelte';
 	import Edit from './icons/Edit.svelte';
-	import { bind } from 'svelte/internal';
 
 	let isNumpadActive: boolean = false;
 	let editingVolley: number | '' = '';
@@ -84,10 +83,22 @@
 			<button class="back-button" on:click={() => scoreSheet.set(null)}>
 				<Back fillColor="#9f9f9f" size={18} /> Retour
 			</button>
-			<button class="square-button" on:click={() => (isEditNameModalActive = true)}>
+			<button
+				class="square-button"
+				on:click={() => {
+					isEditNameModalActive = true;
+					isDeleteConfirmationActive = false;
+				}}
+			>
 				<Edit fillColor="#9f9f9f" />
 			</button>
-			<button class="square-button" on:click={() => (isDeleteConfirmationActive = true)}>
+			<button
+				class="square-button"
+				on:click={() => {
+					isDeleteConfirmationActive = true;
+					isEditNameModalActive = false;
+				}}
+			>
 				<Delete fillColor="#9f9f9f" />
 			</button>
 		</div>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { scoreSheet } from './ScoreSheet';
 	import { deleteSheet } from './SaveUtils';
+	import { slide } from 'svelte/transition';
 
 	export let isModalActive: boolean = false;
 
@@ -11,7 +12,7 @@
 </script>
 
 {#if isModalActive}
-	<div class="modal">
+	<div class="modal" transition:slide>
 		<div class="title">Supprimer cette feuille de score ?</div>
 		<div class="subtitle">{$scoreSheet.name}</div>
 
