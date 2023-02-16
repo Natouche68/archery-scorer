@@ -2,6 +2,7 @@
 	import { scoreSheet } from './ScoreSheet';
 	import { saveSheet } from './SaveUtils';
 	import Back from './icons/Back.svelte';
+	import { slide } from 'svelte/transition';
 
 	export let isNumpadActive: boolean = false;
 	export let editingVolley: number | '' = '';
@@ -40,7 +41,7 @@
 </script>
 
 {#if isNumpadActive}
-	<div class="numpad">
+	<div class="numpad" transition:slide>
 		<div class="row">
 			<button
 				class="key"

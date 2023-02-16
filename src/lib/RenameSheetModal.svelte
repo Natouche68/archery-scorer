@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { scoreSheet } from './ScoreSheet';
 	import { saveSheet } from './SaveUtils';
+	import { slide } from 'svelte/transition';
 
 	export let isModalActive: boolean = false;
 
@@ -16,7 +17,7 @@
 </script>
 
 {#if isModalActive}
-	<form class="modal" on:submit|preventDefault={onEditButtonClicked}>
+	<form class="modal" on:submit|preventDefault={onEditButtonClicked} transition:slide>
 		<div class="title">Modifier le nom de cette feuille de score ?</div>
 		<input type="text" bind:value={newSheetName} required />
 
