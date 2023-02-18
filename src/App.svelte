@@ -3,11 +3,16 @@
 	import Navbar from './lib/Navbar.svelte';
 	import Home from './lib/Home.svelte';
 	import ScoreSheetEditor from './lib/ScoreSheetEditor.svelte';
+	import { fade } from 'svelte/transition';
 </script>
 
 <Navbar />
 {#if $scoreSheet}
-	<ScoreSheetEditor />
+	<div in:fade={{ delay: 200, duration: 200 }} out:fade={{ delay: 0, duration: 200 }}>
+		<ScoreSheetEditor />
+	</div>
 {:else}
-	<Home />
+	<div in:fade={{ delay: 200, duration: 200 }} out:fade={{ delay: 0, duration: 200 }}>
+		<Home />
+	</div>
 {/if}
