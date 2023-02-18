@@ -16,3 +16,9 @@
 		<Home />
 	</div>
 {/if}
+
+<style>
+	:global(button) {
+		cursor: pointer;
+	}
+</style>
